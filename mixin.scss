@@ -1,0 +1,179 @@
+
+/**
+ * 这里是常用的mixin方式
+ */
+
+/* flex 例 @include flex(row,flex-start,flex-start,wrap)*/
+
+@mixin flex ($direction: row, $justify-content: flex-start, $align-items: flex-start,$flex-wrap: nowrap) {
+	box-sizing: border-box;
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+	margin: 0 auto;
+    flex-wrap: $flex-wrap;
+}
+
+@mixin flex-two ($direction: row, $justify-content: flex-start, $align-items: flex-start,$flex-wrap: nowrap) {
+	box-sizing: border-box;
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-wrap: $flex-wrap;
+}
+
+/* flexchild 定义子容器的分配和收缩方式 例 @include flexchild(1,1)*/
+
+@mixin flexchild($grow: 1,$shrink: 1) {
+	flex: $grow;
+	flex-shrink: $shrink;
+}
+
+@mixin head-nav() {
+	width: 100%;
+	height: 100rpx;
+	margin-top: 30rpx;
+	::v-deep .left {
+		font-size: $top-nav-font;
+	}
+	button {
+		width: 100rpx;
+		padding: 3rpx 10rpx;
+		letter-spacing: 5rpx;
+	}
+}
+
+@mixin body-box() {
+	width: 100%;
+	height: auto;
+	padding: 60rpx;
+}
+
+/* 宽度高度混入 使用示例 @include w-h(100, 100) */
+@mixin w-h($w: auto, $h: auto) {
+  @if $w != auto {
+    width: #{$w}rpx;
+  } @else {
+    width: auto;
+  }
+  @if $h != auto {
+    height: #{$h}rpx;
+  } @else {
+    height: auto;
+  }
+}
+
+/* 字体混入 */
+
+@mixin font($s: 24, $c: #444, $l: 24, $f: 400) {
+  font-size: #{$s}rpx;
+  color: #{$c};
+  line-height: #{$l}rpx;
+  font-weight: #{$f};
+  font-family:PingFangSC-Regular,PingFang SC;
+}
+
+/* 文本居中 */
+
+@mixin center($height:100%){
+    height: $height;
+    line-height: $height;
+    text-align: center
+}
+
+/* 修改背景色等  例：@include background(10px, #eee, #fff, 700)*/
+
+@mixin background($border-radius:5px, $bg-color:#eee, $color:#fff, $font-weight:400){
+    border-radius: $border-radius;
+    background-color: $bg-color;
+    color: $color;
+    font-weight: $font-weight;
+}
+
+/* 背景图片混入 @include bg-image(logo) */
+
+@mixin bg-image($url){
+  background-image: url($url + "@2x.png");
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3){
+    background-image: url($url + "@3x.png");
+  }
+}
+
+/* 文字不换行  */
+@mixin no-wrap(){
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 扩展点击区域 */
+@mixin extend-click(){
+  position: relative;
+  &:before{
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+  }
+}
+
+/* 多行文本溢出 */
+@mixin multiEllipsis($line:2){
+    overflow : hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+}
+
+/* 透明度 */
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+/* 清除浮动 */
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+/* 美化占位符 placeholder 样式 */
+@mixin beauty-placeholder($fz, $color: #999, $align: left) {
+  &:-moz-placeholder {
+    font-size: $fz;
+    color: $color;
+    text-align: $align;
+  }
+  
+  &:-ms-input-placeholder {
+    font-size: $fz;
+    color: $color;
+    text-align: $align;
+  }
+  &::-webkit-input-placeholder {
+    font-size: $fz;
+    color: $color;
+    text-align: $align;
+  }
+}
+
+/* 美化文本的选中 */
+@mixin beauty-select($color, $bgcolor) {
+  &::selection {
+    color: $color;
+    background-color: $bgcolor;
+  }
+}
